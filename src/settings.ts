@@ -201,6 +201,10 @@ export class RephraseThisSettingTab extends PluginSettingTab {
 	}
 
 	display(): void {
+		this.renderSettings();
+	}
+
+	private renderSettings(): void {
 		const { containerEl } = this;
 
 		containerEl.empty();
@@ -244,7 +248,7 @@ export class RephraseThisSettingTab extends PluginSettingTab {
 						}
 
 						await this.plugin.saveSettings();
-						this.display();
+						this.renderSettings();
 					}),
 			);
 	}
@@ -346,7 +350,7 @@ export class RephraseThisSettingTab extends PluginSettingTab {
 
 						this.plugin.settings.model = value;
 						await this.plugin.saveSettings();
-						this.display();
+						this.renderSettings();
 					});
 				dropdown.selectEl.disabled = modelOptions.length === 0;
 			});
@@ -359,7 +363,7 @@ export class RephraseThisSettingTab extends PluginSettingTab {
 				.onClick(async () => {
 					this.plugin.settings.modelEntryMode = 'custom';
 					await this.plugin.saveSettings();
-					this.display();
+					this.renderSettings();
 				});
 			button.buttonEl.addClass('rephrasethis-link-button');
 		});
@@ -399,7 +403,7 @@ export class RephraseThisSettingTab extends PluginSettingTab {
 							this.plugin.settings.model = modelOptions[0]?.id ?? DEFAULT_MODEL;
 						}
 						await this.plugin.saveSettings();
-						this.display();
+						this.renderSettings();
 					});
 				button.buttonEl.addClass('rephrasethis-link-button');
 			});
@@ -491,7 +495,7 @@ export class RephraseThisSettingTab extends PluginSettingTab {
 		this.modelLoadError = null;
 
 		if (!options.silent) {
-			this.display();
+			this.renderSettings();
 		}
 
 		void this.loadModels(key, options.silent);
@@ -529,7 +533,7 @@ export class RephraseThisSettingTab extends PluginSettingTab {
 		}
 
 		if (this.modelLoadKey === key) {
-			this.display();
+			this.renderSettings();
 		}
 	}
 
@@ -630,7 +634,7 @@ export class RephraseThisSettingTab extends PluginSettingTab {
 		this.modelLoadError = null;
 
 		if (!this.hasConfiguredApiKey()) {
-			this.display();
+			this.renderSettings();
 			return;
 		}
 
@@ -716,7 +720,7 @@ export class RephraseThisSettingTab extends PluginSettingTab {
 				.onClick(async () => {
 					this.plugin.settings.rephrasePrompt = DEFAULT_REPHRASE_PROMPT;
 					await this.plugin.saveSettings();
-					this.display();
+					this.renderSettings();
 				});
 			button.buttonEl.addClass('rephrasethis-restore-prompt-button');
 		});
@@ -846,14 +850,12 @@ export class RephraseThisSettingTab extends PluginSettingTab {
 				button
 					.setButtonText('Open hotkeys')
 					.onClick(async () => {
-						const commandCopied = await copyRephraseCommandName();
 						const hotkeysOpened = await openHotkeysSettings(this.app);
 						const searchFilled =
 							hotkeysOpened &&
 							(await fillHotkeySearchInput(REPHRASE_COMMAND_NAME));
 
 						showHotkeySetupNotice(
-							commandCopied,
 							hotkeysOpened,
 							searchFilled,
 						);
@@ -1132,15 +1134,6 @@ function shouldUseOpenAiDefaultModel(model: string): boolean {
 	return !/^(gpt-|o[0-9])/i.test(trimmed);
 }
 
-async function copyRephraseCommandName(): Promise<boolean> {
-	try {
-		await activeWindow.navigator.clipboard.writeText(REPHRASE_COMMAND_NAME);
-		return true;
-	} catch {
-		return false;
-	}
-}
-
 async function openHotkeysSettings(app: App): Promise<boolean> {
 	const settingsController = (app as AppWithInternalSettings).setting;
 	if (!settingsController?.open || !settingsController.openTabById) {
@@ -1244,7 +1237,6 @@ function waitForNextFrame(): Promise<void> {
 }
 
 function showHotkeySetupNotice(
-	commandCopied: boolean,
 	hotkeysOpened: boolean,
 	searchFilled: boolean,
 ): void {
@@ -1256,25 +1248,9 @@ function showHotkeySetupNotice(
 		return;
 	}
 
-	if (hotkeysOpened && commandCopied) {
-		new Notice(
-			`Opened Hotkeys and copied "${REPHRASE_COMMAND_NAME}". Paste it in search, press +, choose your shortcut, then save.`,
-			HOTKEY_SETUP_NOTICE_DURATION_MS,
-		);
-		return;
-	}
-
 	if (hotkeysOpened) {
 		new Notice(
 			`Opened Hotkeys. Search for "${REPHRASE_COMMAND_NAME}", press +, choose your shortcut, then save.`,
-			HOTKEY_SETUP_NOTICE_DURATION_MS,
-		);
-		return;
-	}
-
-	if (commandCopied) {
-		new Notice(
-			`Copied "${REPHRASE_COMMAND_NAME}". Open Settings > Hotkeys, paste it in search, press +, choose your shortcut, then save.`,
 			HOTKEY_SETUP_NOTICE_DURATION_MS,
 		);
 		return;

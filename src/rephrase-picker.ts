@@ -174,8 +174,7 @@ export class RephrasePicker extends Component {
 
 		this.rootEl?.classList.add('rephrasethis-rephrase-is-loading');
 		this.rootEl?.classList.remove('rephrasethis-rephrase-is-ready');
-		// eslint-disable-next-line obsidianmd/ui/sentence-case
-		this.suggestionTextEl.textContent = 'rephrasing...';
+		this.suggestionTextEl.textContent = 'Rephrasing...';
 		this.updateFooter();
 		this.position();
 	}

@@ -1,7 +1,7 @@
 {
 	"id": "rephrasethis",
 	"name": "RephraseThis",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"minAppVersion": "1.11.5",
 	"description": "Polish selected text with instant rephrase suggestions.",
 	"author": "George Pickett",
