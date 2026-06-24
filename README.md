@@ -1,3 +1,5 @@
+![RephraseThis animated demo](assets/rephrasethis-hero-animated.gif)
+
 # RephraseThis
 
 RephraseThis helps you polish selected text in Obsidian without leaving the
