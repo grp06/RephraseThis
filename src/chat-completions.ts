@@ -1295,12 +1295,12 @@ function parseAlternativesWithExpectedCount(
 
 		const normalizedAlternative = normalizeText(alternative);
 		if (seenAlternatives.has(normalizedAlternative)) {
-			rejected.push(`Alternative repeats another suggestion: "${alternative}"`);
+			rejected.push('Alternative repeats another suggestion.');
 			continue;
 		}
 
 		if (normalizedAvoidAlternatives.has(normalizedAlternative)) {
-			rejected.push(`Alternative repeats an earlier suggestion: "${alternative}"`);
+			rejected.push('Alternative repeats an earlier suggestion.');
 			continue;
 		}
 
@@ -1347,15 +1347,15 @@ function validateAlternative(
 	const normalizedSelected = normalizeText(selectedText);
 
 	if (normalizedAlternative === normalizedSelected) {
-		return `Alternative repeats the original text: "${alternative}"`;
+		return 'Alternative repeats the original text.';
 	}
 
 	if (selectedLength >= 80 && alternativeLength < selectedLength * 0.45) {
-		return `Alternative too short: "${alternative}"`;
+		return 'Alternative too short.';
 	}
 
 	if (/^\d{4}-\d{2}-\d{2}$/.test(alternative.trim())) {
-		return `Alternative looks like a date: "${alternative}"`;
+		return 'Alternative looks like a date.';
 	}
 
 	const selectedLower = selectedText.toLowerCase();
@@ -1377,7 +1377,7 @@ function validateAlternative(
 	);
 
 	if (leakedPhrase) {
-		return `Alternative appears to use prompt/context language: "${alternative}"`;
+		return 'Alternative appears to use prompt or context language.';
 	}
 
 	return null;

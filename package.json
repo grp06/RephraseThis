@@ -1,6 +1,6 @@
 {
 	"name": "rephrasethis",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Polish selected text with instant rephrase suggestions.",
 	"main": "main.js",
 	"type": "module",
