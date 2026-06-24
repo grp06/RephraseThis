@@ -1,0 +1,377 @@
+.rephrasethis-rephrase-popover {
+	position: fixed;
+	z-index: var(--layer-popover, 1000);
+	box-sizing: border-box;
+	width: max-content;
+	max-width: calc(100vw - 32px);
+	color: var(--text-normal);
+	font-size: var(--font-ui-medium);
+	line-height: 1.35;
+	pointer-events: auto;
+}
+
+.rephrasethis-rephrase-popover * {
+	box-sizing: border-box;
+}
+
+.rephrasethis-rephrase-ghost {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	max-width: min(720px, calc(100vw - 32px));
+	padding: 7px 32px 7px 10px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 8px;
+	background: var(--background-primary);
+	box-shadow: 0 6px 18px rgb(0 0 0 / 18%);
+}
+
+.rephrasethis-rephrase-close {
+	all: unset;
+	position: absolute;
+	top: 7px;
+	right: 8px;
+	display: inline-flex;
+	width: auto;
+	height: auto;
+	min-width: 0;
+	min-height: 0;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	border: 0 !important;
+	background: transparent !important;
+	box-shadow: none !important;
+	color: #fff;
+	cursor: pointer;
+	line-height: 1;
+	opacity: 0.82;
+	transition: opacity 120ms ease;
+}
+
+.rephrasethis-rephrase-close:hover,
+.rephrasethis-rephrase-close:focus-visible {
+	background: transparent !important;
+	box-shadow: none !important;
+	color: #fff;
+	opacity: 1;
+}
+
+.rephrasethis-rephrase-close svg {
+	width: 14px;
+	height: 14px;
+	stroke-width: 2;
+}
+
+.rephrasethis-rephrase-line {
+	display: block;
+	min-width: 0;
+	color: var(--text-normal);
+	font: inherit;
+	font-weight: 500;
+	line-height: 1.42;
+	cursor: default;
+	outline: none;
+	overflow-wrap: anywhere;
+	white-space: normal;
+}
+
+.rephrasethis-rephrase-suggestion {
+	text-decoration: none;
+}
+
+.rephrasethis-rephrase-popover.rephrasethis-rephrase-is-loading .rephrasethis-rephrase-suggestion {
+	color: var(--text-muted);
+	font-weight: 400;
+	text-decoration: none;
+	background: none;
+	animation: none;
+}
+
+.rephrasethis-rephrase-actions {
+	display: flex;
+	width: 100%;
+	min-height: 20px;
+	margin-top: 5px;
+	padding-right: 10px;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	color: var(--text-faint);
+	font-size: 0.78em;
+	font-weight: 500;
+	line-height: 1;
+	white-space: nowrap;
+}
+
+.rephrasethis-rephrase-actions[hidden] {
+	display: none;
+}
+
+.rephrasethis-rephrase-keyboard-hint,
+.rephrasethis-rephrase-counter {
+	display: inline-flex;
+	height: 20px;
+	align-items: center;
+	color: var(--text-faint);
+	font: inherit;
+}
+
+.rephrasethis-rephrase-keyboard-hint {
+	text-transform: lowercase;
+}
+
+.rephrasethis-rephrase-counter {
+	position: relative;
+	margin-left: auto;
+	text-align: right;
+	opacity: 0.68;
+}
+
+.rephrasethis-rephrase-counter.is-loading-more {
+	width: 20px;
+	justify-content: flex-end;
+	opacity: 0.82;
+}
+
+.rephrasethis-rephrase-counter.is-loading-more::before {
+	display: block;
+	width: 10px;
+	height: 10px;
+	border: 1.5px solid rgb(255 255 255 / 24%);
+	border-top-color: rgb(255 255 255 / 88%);
+	border-radius: 50%;
+	content: "";
+	animation: rephrasethis-spin 780ms linear infinite;
+}
+
+.rephrasethis-rephrase-counter.is-loading-more::after {
+	position: absolute;
+	top: calc(100% + 6px);
+	right: 0;
+	display: none;
+	width: max-content;
+	max-width: min(220px, calc(100vw - 32px));
+	color: var(--text-muted);
+	font: inherit;
+	font-weight: 400;
+	line-height: 1.2;
+	text-align: right;
+	white-space: nowrap;
+	content: "loading more suggestions";
+}
+
+.rephrasethis-rephrase-counter.is-loading-more:hover::after {
+	display: block;
+}
+
+.rephrasethis-rephrase-keyboard-hint[hidden],
+.rephrasethis-rephrase-counter[hidden] {
+	display: none;
+}
+
+.rephrasethis-selection-trigger {
+	position: fixed;
+	z-index: var(--layer-popover, 1000);
+	box-sizing: border-box;
+	appearance: none;
+	padding: 4px 7px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 5px;
+	background: var(--background-primary);
+	box-shadow: 0 4px 12px rgb(0 0 0 / 16%);
+	color: var(--text-muted);
+	cursor: pointer;
+	font-size: var(--font-ui-smaller);
+	font-weight: 500;
+	line-height: 1;
+	text-transform: lowercase;
+	white-space: nowrap;
+}
+
+.rephrasethis-selection-trigger:hover,
+.rephrasethis-selection-trigger:focus-visible {
+	background: var(--background-primary);
+	box-shadow: 0 4px 12px rgb(0 0 0 / 16%);
+	color: var(--text-normal);
+}
+
+.rephrasethis-selection-trigger.rephrasethis-selection-trigger-has-warning {
+	border-color: var(--text-warning);
+	color: var(--text-warning);
+}
+
+.rephrasethis-selection-trigger.is-positioning {
+	visibility: hidden;
+}
+
+@keyframes rephrasethis-spin {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.rephrasethis-prompt-textarea {
+	width: 100%;
+	min-height: 360px;
+	font-family: var(--font-monospace);
+	resize: vertical;
+}
+
+.rephrasethis-settings .rephrasethis-prompt-setting {
+	display: block;
+}
+
+.rephrasethis-settings .rephrasethis-prompt-setting .setting-item-info {
+	margin-bottom: 8px;
+}
+
+.rephrasethis-settings .rephrasethis-prompt-setting .setting-item-control {
+	width: 100%;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	gap: 10px;
+}
+
+.rephrasethis-settings .rephrasethis-prompt-setting .setting-item-control textarea {
+	width: 100%;
+	max-width: 100%;
+	flex: 1 1 auto;
+}
+
+.rephrasethis-settings .rephrasethis-restore-prompt-button {
+	align-self: flex-end;
+}
+
+.rephrasethis-settings .rephrasethis-context-setting {
+	display: block;
+}
+
+.rephrasethis-settings .rephrasethis-context-setting .setting-item-info {
+	margin-bottom: 10px;
+}
+
+.rephrasethis-settings .rephrasethis-context-setting .setting-item-control {
+	width: 100%;
+	gap: 12px;
+	justify-content: flex-start;
+}
+
+.rephrasethis-settings .rephrasethis-context-setting .slider {
+	min-width: 220px;
+	max-width: 420px;
+	flex: 1 1 220px;
+	width: 100%;
+}
+
+.rephrasethis-settings .rephrasethis-context-value {
+	min-width: 220px;
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+	white-space: nowrap;
+}
+
+.rephrasethis-settings .rephrasethis-context-reset-button {
+	color: var(--text-muted);
+}
+
+.rephrasethis-settings .rephrasethis-model-input,
+.rephrasethis-settings .rephrasethis-model-select {
+	width: clamp(220px, 24vw, 300px);
+	max-width: 100%;
+}
+
+.rephrasethis-settings .rephrasethis-model-setting .setting-item-info {
+	flex: 1 1 240px;
+	min-width: 220px;
+}
+
+.rephrasethis-settings .rephrasethis-model-setting .setting-item-control {
+	flex: 0 1 auto;
+	gap: 10px;
+}
+
+.rephrasethis-settings .rephrasethis-model-setting .rephrasethis-link-button {
+	flex: 0 0 auto;
+	white-space: nowrap;
+}
+
+.rephrasethis-settings .rephrasethis-link-button {
+	background: transparent;
+	border-color: transparent;
+	box-shadow: none;
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+	padding-inline: 0;
+}
+
+.rephrasethis-settings .rephrasethis-link-button:hover {
+	background: transparent;
+	color: var(--text-normal);
+	text-decoration: underline;
+}
+
+.rephrasethis-settings .rephrasethis-advanced-settings {
+	margin: 6px 0 22px;
+	color: var(--text-muted);
+}
+
+.rephrasethis-settings .rephrasethis-advanced-settings summary {
+	width: fit-content;
+	padding: 6px 0;
+	cursor: pointer;
+	font-size: var(--font-ui-small);
+	font-weight: 600;
+}
+
+.rephrasethis-settings .rephrasethis-advanced-settings summary:hover {
+	color: var(--text-normal);
+}
+
+.rephrasethis-settings .rephrasethis-advanced-description {
+	margin: 0 0 8px;
+}
+
+.rephrasethis-settings .rephrasethis-advanced-settings .setting-item {
+	padding: 14px 16px;
+	gap: 18px;
+}
+
+.rephrasethis-settings .rephrasethis-advanced-settings .setting-item-info {
+	flex: 1 1 220px;
+	min-width: 180px;
+}
+
+.rephrasethis-settings .rephrasethis-advanced-settings .setting-item-control {
+	flex: 1 1 320px;
+	min-width: 0;
+	justify-content: flex-end;
+}
+
+.rephrasethis-settings .rephrasethis-api-base-url-input {
+	width: clamp(300px, 40vw, 520px);
+	max-width: 100%;
+}
+
+.rephrasethis-settings .rephrasethis-api-key-setting .setting-item-info {
+	flex: 1 1 180px;
+	min-width: 150px;
+}
+
+.rephrasethis-settings .rephrasethis-api-key-setting .setting-item-control {
+	flex: 0 1 auto;
+	min-width: 0;
+	gap: 8px;
+}
+
+.rephrasethis-settings .rephrasethis-api-key-input {
+	width: clamp(280px, 34vw, 460px);
+	max-width: 100%;
+}
